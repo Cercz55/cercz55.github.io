@@ -3,6 +3,7 @@ description: Here I write my random cyber notes, hope you can learn something fr
 author: César Cruz
 theme: minima
 rss_enabled: true
+markdown: kramdown
 
 nav:
   - title: "Home"
