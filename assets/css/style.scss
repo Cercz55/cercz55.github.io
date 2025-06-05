@@ -1,12 +1,51 @@
+---
+---
+
+/* ---------------- Base Styles ---------------- */
+
 nav {
   background: #333;
   padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
 }
+
 nav a {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
 }
+
 nav a:hover {
   text-decoration: underline;
+}
+
+/* ---------------- Responsive Tweaks ---------------- */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ---------------- Dark Mode (System Preference) ---------------- */
+@media (prefers-color-scheme: dark) {
+  nav {
+    background: #1e1e1e;
+  }
+
+  nav a {
+    color: #ddd;
+  }
+}
+
+/* ---------------- Dark Mode (Manual Toggle Support) ---------------- */
+[data-theme="dark"] nav {
+  background: #1e1e1e;
+}
+
+[data-theme="dark"] nav a {
+  color: #ddd;
 }
