@@ -2,53 +2,107 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 📱 Mobile responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title }} | {{ site.title }}</title>
   <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
   <!-- 🌓 Dark Mode Toggle Button -->
-  <button id="dark-toggle" style="
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    z-index: 999;
-    padding: 0.5rem 1rem;
-    background: #eee;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  ">🌓</button>
+  <button id="dark-toggle" class="theme-toggle" aria-label="Toggle theme">
+    <i class="fas fa-moon"></i>
+  </button>
 
-  <!-- ✅ Navigation Bar -->
+  <!-- Header Section -->
+  <header>
+    <h1 class="site-title">{{ site.title }}</h1>
+    <p class="site-description">{{ site.description }}</p>
+  </header>
+
+  <!-- Navigation Bar -->
   <nav>
-    <ul style="display: flex; gap: 1rem; list-style: none; padding: 1rem;">
-      {% for item in site.nav %}
-        <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
-      {% endfor %}
-    </ul>
+    {% for item in site.nav %}
+      <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+    {% endfor %}
   </nav>
 
-  <main>
+  <!-- Main Content -->
+  <main class="content-container">
     {{ content }}
   </main>
 
-  <!-- 🌙 Dark Mode Script -->
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-content">
+      <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
+      <div class="social-links">
+        {% if site.github_username %}
+          <a href="https://github.com/{{ site.github_username }}" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+        {% endif %}
+        {% if site.twitter_username %}
+          <a href="https://twitter.com/{{ site.twitter_username }}" aria-label="Twitter">
+            <i class="fab fa-twitter"></i>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </footer>
+
+  <!-- Theme Toggle Script -->
   <script>
     const toggleBtn = document.getElementById('dark-toggle');
-    const root = document.body;
+    const root = document.documentElement;
     const savedTheme = localStorage.getItem('theme');
+    const icon = toggleBtn.querySelector('i');
 
-    if (savedTheme) {
-      root.setAttribute('data-theme', savedTheme);
+    // Set initial theme
+    function setInitialTheme() {
+      if (savedTheme) {
+        root.setAttribute('data-theme', savedTheme);
+        updateIcon(savedTheme);
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        root.setAttribute('data-theme', 'dark');
+        updateIcon('dark');
+      } else {
+        root.setAttribute('data-theme', 'light');
+        updateIcon('light');
+      }
     }
 
+    // Update icon based on theme
+    function updateIcon(theme) {
+      if (theme === 'dark') {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    }
+
+    // Toggle theme
     toggleBtn.addEventListener('click', () => {
       const current = root.getAttribute('data-theme');
       const next = current === 'dark' ? 'light' : 'dark';
+      
       root.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
+      updateIcon(next);
+    });
+
+    // Initialize
+    setInitialTheme();
+
+    // Watch for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      if (!savedTheme) {
+        const newTheme = e.matches ? 'dark' : 'light';
+        root.setAttribute('data-theme', newTheme);
+        updateIcon(newTheme);
+      }
     });
   </script>
 
