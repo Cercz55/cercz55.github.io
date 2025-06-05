@@ -6,6 +6,7 @@ permalink: /aboutme/
 ---
 
 <div class="about-container">
+
 # About César Cruz
 
 <!--![Your Photo](/assets/images/profile.jpg){: .profile-image } -->
@@ -15,7 +16,7 @@ Welcome to my cyber corner! I'm César Cruz (Cercz55), a cybersecurity enthusias
 ---
 
 ## My Background
-- 🛡️ Cybersecurity professional with 3 years of experience. Focusing on Incident Response and all kinds of SOC responsabilities
+- 🛡️ Cybersecurity professional with 3 years of experience. Focusing on Incident Response and all kinds of SOC responsibilities
 - 🔐 Specializing in Incident Response, SOC engineering, and currently learning malware analysis and assembly.
 - 🎓 I have an IT Security degree from the FCFM (Faculty of Math and Physics Sciences - UANL) in Monterrey. Certifications: PSAA, Trend Micro Suite (Apex One, Deep Security and Vision One), Darktrace Threat Visualizer Essentials and some from Qualys
 
@@ -25,15 +26,12 @@ Welcome to my cyber corner! I'm César Cruz (Cercz55), a cybersecurity enthusias
 - Cool investigations that I've done
 - Write ups from some blue team labs (Network security, Forensics, Malware analysis, etc.)
 - Useful study notes I've collected from courses
-</div>
 
----
+</div> <!-- This closes about-container -->
 
 <div class="contact-links">
 ## Get In Touch
 - [Email](mailto:cesargcruzzapata@gmail.com)
-- [LinkedIn](www.linkedin.com/in/cercz55)
+- [LinkedIn](https://www.linkedin.com/in/cercz55)
 - [GitHub](https://github.com/cercz55)
-</div>
-
 </div>
