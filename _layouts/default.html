@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ site.description }}">
+  <meta name="author" content="{{ site.author }}">
   <title>
     {% if page.title %}
       {{ page.title }} | {{ site.title }}
@@ -12,6 +14,9 @@
   </title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  {% if site.rss_enabled %}
+    <link rel="alternate" type="application/rss+xml" href="{{ '/feed.xml' | relative_url }}" title="{{ site.title }}">
+  {% endif %}
 </head>
 <body>
   <!-- Theme Toggle -->
@@ -24,15 +29,13 @@
     <h1 class="site-title">
       <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
     </h1>
-    {% if site.description %}
-      <p class="site-description">{{ site.description }}</p>
-    {% endif %}
+    <p class="site-description">{{ site.description }}</p>
+    <p class="site-author">By {{ site.author }}</p>
   </header>
 
   <!-- Navigation -->
   <nav class="site-nav">
-    {% assign nav_items = site.pages | where_exp: "item", "item.nav_order != nil" | sort: "nav_order" %}
-    {% for item in nav_items %}
+    {% for item in site.nav %}
       <a href="{{ item.url | relative_url }}" {% if page.url == item.url %}class="active"{% endif %}>
         {{ item.title }}
       </a>
@@ -48,22 +51,12 @@
   <footer class="site-footer">
     <div class="footer-content">
       <div class="footer-left">
-        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}</p>
+        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author }} - {{ site.title }}</p>
       </div>
       <div class="footer-right">
-        {% if site.github_username %}
-          <a href="https://github.com/{{ site.github_username }}" aria-label="GitHub">
-            <i class="fab fa-github"></i>
-          </a>
-        {% endif %}
-        {% if site.twitter_username %}
-          <a href="https://twitter.com/{{ site.twitter_username }}" aria-label="Twitter">
-            <i class="fab fa-twitter"></i>
-          </a>
-        {% endif %}
         {% if site.rss_enabled %}
-          <a href="{{ '/feed.xml' | relative_url }}" aria-label="RSS Feed">
-            <i class="fas fa-rss"></i>
+          <a href="{{ '/feed.xml' | relative_url }}" aria-label="RSS Feed" class="rss-link">
+            <i class="fas fa-rss"></i> Subscribe
           </a>
         {% endif %}
       </div>
@@ -71,47 +64,79 @@
   </footer>
 
   <script>
-    // Theme Toggle Functionality
+    // Enhanced Theme Toggle with Cyber Theme
     const toggleBtn = document.getElementById('theme-toggle');
     const icon = toggleBtn.querySelector('i');
     const root = document.documentElement;
     
+    // Cyber-inspired color themes
+    const themes = {
+      light: {
+        '--primary': '#2563eb',
+        '--secondary': '#3b82f6',
+        '--accent': '#1e40af',
+        '--text': '#1f2937',
+        '--bg': '#f9fafb',
+        '--nav-bg': '#1e40af',
+        '--card-bg': '#ffffff'
+      },
+      dark: {
+        '--primary': '#3b82f6',
+        '--secondary': '#60a5fa',
+        '--accent': '#93c5fd',
+        '--text': '#e5e7eb',
+        '--bg': '#111827',
+        '--nav-bg': '#1e293b',
+        '--card-bg': '#1f2937'
+      },
+      cyber: {
+        '--primary': '#00ff9d',
+        '--secondary': '#00b8ff',
+        '--accent': '#bd00ff',
+        '--text': '#e0e0e0',
+        '--bg': '#0a0a0a',
+        '--nav-bg': '#121212',
+        '--card-bg': '#1a1a1a'
+      }
+    };
+
     // Set initial theme
     function setTheme() {
-      const savedTheme = localStorage.getItem('theme');
-      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      
-      if (savedTheme) {
-        root.setAttribute('data-theme', savedTheme);
-      } else {
-        root.setAttribute('data-theme', systemDark ? 'dark' : 'light');
-      }
-      updateIcon();
+      const savedTheme = localStorage.getItem('theme') || 'cyber';
+      applyTheme(savedTheme);
+      updateIcon(savedTheme);
     }
     
-    // Update icon based on current theme
-    function updateIcon() {
-      const currentTheme = root.getAttribute('data-theme');
-      icon.classList.toggle('fa-moon', currentTheme === 'light');
-      icon.classList.toggle('fa-sun', currentTheme === 'dark');
+    // Apply theme colors
+    function applyTheme(theme) {
+      const colors = themes[theme];
+      Object.entries(colors).forEach(([key, value]) => {
+        root.style.setProperty(key, value);
+      });
+      root.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
     }
     
-    // Toggle theme
+    // Update icon
+    function updateIcon(theme) {
+      const icons = {
+        light: 'fa-moon',
+        dark: 'fa-sun',
+        cyber: 'fa-terminal'
+      };
+      icon.className = `fas ${icons[theme]}`;
+    }
+    
+    // Toggle through themes
     toggleBtn.addEventListener('click', () => {
       const currentTheme = root.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      const themeOrder = ['light', 'dark', 'cyber'];
+      const currentIndex = themeOrder.indexOf(currentTheme);
+      const nextIndex = (currentIndex + 1) % themeOrder.length;
+      const nextTheme = themeOrder[nextIndex];
       
-      root.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      updateIcon();
-    });
-    
-    // Watch for system theme changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      if (!localStorage.getItem('theme')) {
-        root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
-        updateIcon();
-      }
+      applyTheme(nextTheme);
+      updateIcon(nextTheme);
     });
     
     // Initialize
