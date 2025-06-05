@@ -259,9 +259,7 @@ footer {
   }
 }
 
-/* ================ ABOUT PAGE ADDITIONS ================ */
-
-/* About Me Container */
+/* ================ ABOUT PAGE STYLES ================ */
 .about-container {
   max-width: 800px;
   margin: 2rem auto;
@@ -269,6 +267,7 @@ footer {
   background: var(--card-bg);
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  line-height: 1.7; /* Mejor espaciado entre líneas */
 }
 
 [data-theme="cyber"] .about-container {
@@ -276,110 +275,73 @@ footer {
   border: 1px solid var(--accent-color);
 }
 
-/* Profile Section */
-.profile-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 2rem;
-  text-align: center;
+/* Header Styles */
+.about-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
 }
 
-.profile-image {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--primary-color);
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-[data-theme="cyber"] .profile-image {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 15px var(--accent-color);
-}
-
-/* Sections */
-.about-section {
-  margin-bottom: 2.5rem;
-}
-
-.about-section h2 {
+.about-container h2 {
   color: var(--primary-color);
   border-bottom: 2px solid var(--primary-color);
   padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
+  margin: 2rem 0 1rem 0;
 }
 
-[data-theme="cyber"] .about-section h2 {
+[data-theme="cyber"] .about-container h2 {
   text-shadow: 0 0 5px var(--primary-color);
   border-color: var(--accent-color);
 }
 
-/* Lists */
-.about-list {
-  list-style-type: none;
+/* List Styles */
+.about-container ul {
   padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
-.about-list li {
+.about-container li {
+  margin-bottom: 0.8rem;
   position: relative;
   padding-left: 1.5rem;
-  margin-bottom: 0.75rem;
 }
 
-.about-list li:before {
+.about-container li:before {
   content: "▹";
   position: absolute;
   left: 0;
   color: var(--primary-color);
 }
 
-[data-theme="cyber"] .about-list li:before {
+[data-theme="cyber"] .about-container li:before {
   content: "⦿";
   color: var(--accent-color);
-}
-
-/* Skills Grid */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.skill-item {
-  background: rgba(0,0,0,0.05);
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  text-align: center;
-}
-
-[data-theme="dark"] .skill-item,
-[data-theme="cyber"] .skill-item {
-  background: rgba(255,255,255,0.05);
 }
 
 /* Contact Links */
 .contact-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 }
 
 .contact-link {
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 4px;
   background: var(--primary-color);
-  color: white;
+  color: white !important;
   text-decoration: none;
-  transition: transform 0.2s ease;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .contact-link:hover {
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 [data-theme="cyber"] .contact-link {
@@ -387,16 +349,17 @@ footer {
   box-shadow: 0 0 10px var(--accent-color);
 }
 
-/* ================ EXISTING CSS ENHANCEMENTS ================ */
-
-/* Update content spacing */
-.content {
-  padding: 2rem 0;
-}
-
-/* Enhance post cards to match about container */
-.post {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  .about-container {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .contact-links {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .post:hover {
