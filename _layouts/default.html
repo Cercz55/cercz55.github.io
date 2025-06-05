@@ -2,10 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 📱 Mobile responsive -->
   <title>{{ page.title }} | {{ site.title }}</title>
   <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
 </head>
 <body>
+
+  <!-- 🌓 Dark Mode Toggle Button -->
+  <button id="dark-toggle" style="
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 999;
+    padding: 0.5rem 1rem;
+    background: #eee;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  ">🌓</button>
 
   <!-- ✅ Navigation Bar -->
   <nav>
@@ -19,6 +33,24 @@
   <main>
     {{ content }}
   </main>
+
+  <!-- 🌙 Dark Mode Script -->
+  <script>
+    const toggleBtn = document.getElementById('dark-toggle');
+    const root = document.documentElement;
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme) {
+      root.setAttribute('data-theme', savedTheme);
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  </script>
 
 </body>
 </html>
