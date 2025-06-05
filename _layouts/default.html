@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }} | {{ site.title }}</title>
+  <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
+</head>
+<body>
+
+  <!-- ✅ Navigation Bar -->
+  <nav>
+    <ul style="display: flex; gap: 1rem; list-style: none; padding: 1rem;">
+      {% for item in site.nav %}
+        <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </nav>
+
+  <main>
+    {{ content }}
+  </main>
+
+</body>
+</html>
