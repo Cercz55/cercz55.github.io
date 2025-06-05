@@ -258,3 +258,147 @@ footer {
     gap: 1rem;
   }
 }
+
+/* ================ ABOUT PAGE ADDITIONS ================ */
+
+/* About Me Container */
+.about-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+[data-theme="cyber"] .about-container {
+  box-shadow: 0 0 20px rgba(0, 255, 157, 0.15);
+  border: 1px solid var(--accent-color);
+}
+
+/* Profile Section */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary-color);
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+[data-theme="cyber"] .profile-image {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 15px var(--accent-color);
+}
+
+/* Sections */
+.about-section {
+  margin-bottom: 2.5rem;
+}
+
+.about-section h2 {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+[data-theme="cyber"] .about-section h2 {
+  text-shadow: 0 0 5px var(--primary-color);
+  border-color: var(--accent-color);
+}
+
+/* Lists */
+.about-list {
+  list-style-type: none;
+  padding-left: 1.5rem;
+}
+
+.about-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.about-list li:before {
+  content: "▹";
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+}
+
+[data-theme="cyber"] .about-list li:before {
+  content: "⦿";
+  color: var(--accent-color);
+}
+
+/* Skills Grid */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.skill-item {
+  background: rgba(0,0,0,0.05);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+[data-theme="dark"] .skill-item,
+[data-theme="cyber"] .skill-item {
+  background: rgba(255,255,255,0.05);
+}
+
+/* Contact Links */
+.contact-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.contact-link {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.contact-link:hover {
+  transform: translateY(-2px);
+}
+
+[data-theme="cyber"] .contact-link {
+  background: var(--accent-color);
+  box-shadow: 0 0 10px var(--accent-color);
+}
+
+/* ================ EXISTING CSS ENHANCEMENTS ================ */
+
+/* Update content spacing */
+.content {
+  padding: 2rem 0;
+}
+
+/* Enhance post cards to match about container */
+.post {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post:hover {
+  transform: translateY(-5px);
+}
