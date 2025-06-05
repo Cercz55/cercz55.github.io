@@ -3,40 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title }} | {{ site.title }}</title>
-  <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <title>
+    {% if page.title %}
+      {{ page.title }} | {{ site.title }}
+    {% else %}
+      {{ site.title }}
+    {% endif %}
+  </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
 <body>
-
-  <!-- 🌓 Dark Mode Toggle Button -->
-  <button id="dark-toggle" class="theme-toggle" aria-label="Toggle theme">
+  <!-- Theme Toggle -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
     <i class="fas fa-moon"></i>
   </button>
 
-  <!-- Header Section -->
-  <header>
-    <h1 class="site-title">{{ site.title }}</h1>
-    <p class="site-description">{{ site.description }}</p>
+  <!-- Header -->
+  <header class="site-header">
+    <h1 class="site-title">
+      <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    </h1>
+    {% if site.description %}
+      <p class="site-description">{{ site.description }}</p>
+    {% endif %}
   </header>
 
-  <!-- Navigation Bar -->
-  <nav>
-    {% for item in site.nav %}
-      <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+  <!-- Navigation -->
+  <nav class="site-nav">
+    {% assign nav_items = site.pages | where_exp: "item", "item.nav_order != nil" | sort: "nav_order" %}
+    {% for item in nav_items %}
+      <a href="{{ item.url | relative_url }}" {% if page.url == item.url %}class="active"{% endif %}>
+        {{ item.title }}
+      </a>
     {% endfor %}
   </nav>
 
   <!-- Main Content -->
-  <main class="content-container">
+  <main class="content">
     {{ content }}
   </main>
 
-  <!-- Footer Section -->
-  <footer>
+  <!-- Footer -->
+  <footer class="site-footer">
     <div class="footer-content">
-      <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
-      <div class="social-links">
+      <div class="footer-left">
+        <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}</p>
+      </div>
+      <div class="footer-right">
         {% if site.github_username %}
           <a href="https://github.com/{{ site.github_username }}" aria-label="GitHub">
             <i class="fab fa-github"></i>
@@ -47,64 +61,61 @@
             <i class="fab fa-twitter"></i>
           </a>
         {% endif %}
+        {% if site.rss_enabled %}
+          <a href="{{ '/feed.xml' | relative_url }}" aria-label="RSS Feed">
+            <i class="fas fa-rss"></i>
+          </a>
+        {% endif %}
       </div>
     </div>
   </footer>
 
-  <!-- Theme Toggle Script -->
   <script>
-    const toggleBtn = document.getElementById('dark-toggle');
-    const root = document.documentElement;
-    const savedTheme = localStorage.getItem('theme');
+    // Theme Toggle Functionality
+    const toggleBtn = document.getElementById('theme-toggle');
     const icon = toggleBtn.querySelector('i');
-
+    const root = document.documentElement;
+    
     // Set initial theme
-    function setInitialTheme() {
+    function setTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
       if (savedTheme) {
         root.setAttribute('data-theme', savedTheme);
-        updateIcon(savedTheme);
-      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        root.setAttribute('data-theme', 'dark');
-        updateIcon('dark');
       } else {
-        root.setAttribute('data-theme', 'light');
-        updateIcon('light');
+        root.setAttribute('data-theme', systemDark ? 'dark' : 'light');
       }
+      updateIcon();
     }
-
-    // Update icon based on theme
-    function updateIcon(theme) {
-      if (theme === 'dark') {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-      } else {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-      }
+    
+    // Update icon based on current theme
+    function updateIcon() {
+      const currentTheme = root.getAttribute('data-theme');
+      icon.classList.toggle('fa-moon', currentTheme === 'light');
+      icon.classList.toggle('fa-sun', currentTheme === 'dark');
     }
-
+    
     // Toggle theme
     toggleBtn.addEventListener('click', () => {
-      const current = root.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
+      const currentTheme = root.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
       
-      root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      updateIcon(next);
+      root.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateIcon();
     });
-
-    // Initialize
-    setInitialTheme();
-
+    
     // Watch for system theme changes
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      if (!savedTheme) {
-        const newTheme = e.matches ? 'dark' : 'light';
-        root.setAttribute('data-theme', newTheme);
-        updateIcon(newTheme);
+      if (!localStorage.getItem('theme')) {
+        root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+        updateIcon();
       }
     });
+    
+    // Initialize
+    setTheme();
   </script>
-
 </body>
 </html>
