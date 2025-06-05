@@ -2,6 +2,7 @@
 layout: default
 title: About Me
 nav_order: 2
+permalink: /aboutme/
 ---
 
 <div class="about-container">
