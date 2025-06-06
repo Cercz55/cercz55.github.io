@@ -151,6 +151,14 @@ a:hover {
   text-align: justify;
 }
 
+code {
+  font-size: 0.95em;      /* Same size as surrounding text */
+  background-color: #f5f5f5;  /* Optional: subtle background */
+  padding: 0.1em 0.3em;       /* Optional: some padding */
+  border-radius: 3px;         /* Optional: rounded corners */
+  font-family: 'Courier New', monospace; /* Make sure it’s monospace */
+}
+
 .content img,
 .post img {
   max-width: 100%;
