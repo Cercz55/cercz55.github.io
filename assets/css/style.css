@@ -149,7 +149,6 @@ a:hover {
 
 .post p {  /* Justification for paragraphs and hyphens enabled */
   text-align: justify;
-  hyphens: auto;
 }
 
 .content img,
