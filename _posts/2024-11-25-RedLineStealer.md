@@ -13,7 +13,10 @@ Tools:
 • VirusTotal  
 • MalwareBazaar  
 • ThreatFox
- 
+
+File involved: 
+SHA256: 248FCC901AFF4E4B4C48C91E4D78A939BF681C9A1BC24ADDC3551B32768F907B
+
 **Questions**
  
 Q1. Categorizing malware allows for a quicker and easier understanding of the malware, aiding in  
