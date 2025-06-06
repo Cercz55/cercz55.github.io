@@ -147,6 +147,11 @@ a:hover {
   margin-bottom: 0.5rem;
 }
 
+.post p {  /* Justification for paragraphs and hyphens enabled */
+  text-align: justify;
+  hyphens: auto;
+}
+
 .content img,
 .post img {
   max-width: 100%;
