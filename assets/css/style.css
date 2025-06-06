@@ -147,15 +147,6 @@ a:hover {
   margin-bottom: 0.5rem;
 }
 
-.post-title {  
-  font-size: 2.5rem; /* Adjust size as needed */
-  font-weight: bold;
-  color: var(--primary-color);
-  margin-top: 0;
-  margin-bottom: 1rem;
-  line-height: 1.2;
-}
-
 /* ---------------- Footer ---------------- */
 footer {
   text-align: center;
