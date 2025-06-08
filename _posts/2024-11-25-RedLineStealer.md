@@ -99,7 +99,9 @@ Q10. By identifying the malware's imported DLLs, we can configure security tools
 *= advapi32.dll*
 
 This one is a very common dll abused for privilege escalation.
- 
+
+![image](/assets/images/casuihcasiuh.png)
+
 And that would be it.  
 Thanks.
  
